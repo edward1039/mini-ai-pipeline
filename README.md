@@ -1,6 +1,6 @@
 # Mini AI Pipeline Project: CIFAR-10 Image Classification
-**Name:** Your Name  
-**Student ID:** Your Student ID  
+**Name:** Jahyun Koo  
+**Student ID:** 2023148049  
 
 ---
 
