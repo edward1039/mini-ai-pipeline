@@ -1,60 +1,72 @@
-# Mini AI Pipeline Project
-
-## 1. Task Description & Motivation
-**Task:** Image classification on CIFAR-10 dataset (10 classes).  
-**Motivation:** Practice building a small AI pipeline, compare naive baseline with a pretrained model, and understand the workflow of AI experiments.
-
-**Input/Output:**  
-- Input: 32x32 color images (CIFAR-10)  
-- Output: Class label from ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
-
-**Success Criteria:** Higher accuracy compared to naive baseline.
+# Mini AI Pipeline Project: CIFAR-10 Image Classification
+**Name:** Your Name  
+**Student ID:** Your Student ID  
 
 ---
 
-## 2. Dataset
-- **Source:** CIFAR-10 (torchvision)  
-- **Train/Test Split:** 50,000 train / 10,000 test  
-- **Preprocessing:**  
-  - Baseline: None  
-  - ResNet18 pipeline: Resize to 224x224, convert to tensor
+## 1. Introduction
+
+This project demonstrates a small AI pipeline using CIFAR-10 image classification.  
+The goal is to practice building a baseline and an improved pipeline using a pre-trained model, and compare their performance.
+
+- **Task description:** Classify CIFAR-10 images into 10 classes: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck.
+- **Motivation:** Image classification is a fundamental AI task, suitable for learning AI pipelines without training large models.
+- **Input / Output:** Input: 32×32 RGB image. Output: predicted class label.
+- **Success criteria:** Measured by classification accuracy on the test set.
 
 ---
 
-## 3. Methods
+## 2. Methods
 
-### 3.1 Naive Baseline
-- Randomly predicts one of 10 classes  
-- **Limitations:** Ignores image content, accuracy around 10%  
-- **Failure Mode:** Always performs poorly, no learning involved
+### 2.1 Naïve Baseline
+- **Method description:** Predicts classes randomly (or based on simple frequency statistics).
+- **Why naïve:** Does not use any learned model or feature representation.
+- **Likely failure modes:** Any image with non-uniform pixel distribution or real patterns will likely be misclassified.
 
-### 3.2 AI Pipeline
-- **Model:** Pretrained ResNet18 (ImageNet weights)  
-- **Pipeline:**  
-  1. Resize image to 224x224  
-  2. Convert to tensor  
-  3. Feed into ResNet18 (no fine-tuning)  
-  4. Take argmax of outputs as prediction  
-- **Limitations:** Domain mismatch (CIFAR-10 vs ImageNet), no fine-tuning, so accuracy is low
-
----
-
-## 4. Experiments & Results
-
-| Method                     | Accuracy |
-|-----------------------------|---------|
-| Naive Baseline              | ~0.10   |
-| Pretrained ResNet18 (no FT) | ~0.07   |
-
-**Example Cases (predicted vs true):**  
-- Random baseline often wrong  
-- ResNet18 sometimes misclassifies 'cat' as 'dog' or 'frog' as 'bird'
+### 2.2 AI Pipeline
+- **Models used:** Pre-trained ResNet18 (inference only)
+- **Pipeline stages:**
+  1. Resize input images from 32×32 to 224×224, normalize.
+  2. Forward pass through ResNet18.
+  3. Argmax of outputs for predicted class.
+- **Design choices and justification:** ResNet18 is a widely used image classifier; using pre-trained weights allows fast inference without fine-tuning. Pipeline is simple but sufficient to practice AI workflow.
 
 ---
 
-## 5. Reflection & Limitations
-- Naive baseline works as expected (~10% accuracy)  
-- Pretrained ResNet18 without fine-tuning performs worse than baseline due to domain mismatch  
-- Metric (accuracy) captures overall performance but not class-wise errors  
-- Future improvements: fine-tuning, data augmentation, using smaller or custom models, top-k accuracy analysis
+## 3. Experiments
 
+### 3.1 Dataset
+- **Source:** CIFAR-10 dataset from torchvision
+- **Total examples:** 60,000 (50,000 train / 10,000 test)
+- **Train/Test split:** Standard CIFAR-10 split
+- **Preprocessing steps:** Resize, convert to tensor, normalize using ImageNet mean/std
+
+### 3.2 Metrics
+- Accuracy
+
+### 3.3 Results
+
+| Method           | Accuracy |
+|-----------------|---------|
+| Naïve Baseline   | 0.0997  |
+| AI Pipeline      | 0.0702  |
+
+**Example cases:**  
+- Some random images from each class with baseline vs. AI pipeline predictions (optional: add screenshots if available)
+
+---
+
+## 4. Reflection and Limitations
+
+- Baseline performs at random chance (~10%), as expected.
+- Pre-trained ResNet18 without fine-tuning performs poorly (~7%) on CIFAR-10 due to domain mismatch with ImageNet.
+- Fine-tuning could improve performance significantly.
+- Pipeline allows practice of preprocessing, model inference, and evaluation stages.
+- Accuracy metric is simple but sufficient for this small-scale pipeline.
+- Time and resource constraints prevented fine-tuning and data augmentation.
+- Next steps: fine-tune on CIFAR-10 subset, try data augmentation, or experiment with lightweight models.
+
+---
+
+## References
+[1] Jason Wei, et al. "Finetuned language models are zero-shot learners." ICLR 2022. [URL](https://openreview.net/forum?id=gEZrGCozdqR)
